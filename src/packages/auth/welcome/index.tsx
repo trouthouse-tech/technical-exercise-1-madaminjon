@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useAuthNavigation } from "@/src/nav/auth/hooks";
 import { AUTH_ROUTES } from "@/src/nav/auth/types";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 const WelcomeScreen = () => {
   const navigation = useAuthNavigation();
@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
 
   return (
     <ThemedView style={{ flex: 1 }}>
-      <View style={{}}>
+      <ThemedView style={{}}>
         <ThemedText style={styles.title}>
           Welcome to the{" "}
           <ThemedText style={[styles.title, styles.spanReactNative]}>
@@ -23,11 +23,11 @@ const WelcomeScreen = () => {
           </ThemedText>
         </ThemedText>
         <ThemedText style={styles.describtion}>Technical Exercise</ThemedText>
-      </View>
-      <View style={styles.btnsView}>
+      </ThemedView>
+      <ThemedView style={styles.btnsView}>
         <CustomButton title="Sign Up" onPress={() => {}} />
         <CustomButton title="Sign In" onPress={goToLoginScreen} />
-      </View>
+      </ThemedView>
     </ThemedView>
   );
 };
