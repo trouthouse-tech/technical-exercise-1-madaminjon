@@ -1,8 +1,11 @@
+import { useRootNavigation } from "@/src/nav/root/hooks";
+import { ROOT_ROUTES } from "@/src/nav/root/types";
 import { useAppDispatch } from "@/src/store/hooks";
 import { userActions } from "@/src/store/slices/user";
 import { useCallback, useState } from "react";
 
 export const useLogin = () => {
+  const navigation = useRootNavigation();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({ email: "", password: "" });
@@ -19,6 +22,7 @@ export const useLogin = () => {
 
         // reset the user state and navigate to the main page
         setUser({ email: "", password: "" });
+        navigation.navigate(ROOT_ROUTES.MAIN);
       } catch (error) {
         console.log(error);
       } finally {
