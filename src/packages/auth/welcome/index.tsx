@@ -1,17 +1,24 @@
 import CustomButton from "@/components/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useCheckAuthState } from "@/hooks/useCheckAuthState";
 import { useAuthNavigation } from "@/src/nav/auth/hooks";
 import { AUTH_ROUTES } from "@/src/nav/auth/types";
 import React from "react";
 import { StyleSheet } from "react-native";
+import LoadingScreen from "../loading";
 
 const WelcomeScreen = () => {
   const navigation = useAuthNavigation();
+  const { loading } = useCheckAuthState();
 
   const goToLoginScreen = () => {
     navigation.navigate(AUTH_ROUTES.LOGIN);
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <ThemedView style={{ flex: 1 }}>
