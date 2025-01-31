@@ -1,8 +1,9 @@
 import { useRootNavigation } from "@/src/nav/root/hooks";
 import { ROOT_ROUTES } from "@/src/nav/root/types";
+import { storage } from "@/src/storage";
 import { useAppDispatch } from "@/src/store/hooks";
 import { userActions } from "@/src/store/slices/user";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export const useLogin = () => {
   const navigation = useRootNavigation();
@@ -19,6 +20,7 @@ export const useLogin = () => {
         dispatch(userActions.login(newUser));
 
         // save user or token to the local storage
+        await storage.setItem("user", JSON.stringify(newUser));
 
         // reset the user state and navigate to the main page
         setUser({ email: "", password: "" });
@@ -29,13 +31,16 @@ export const useLogin = () => {
         setLoading(false);
       }
     },
-    [dispatch, setLoading]
+    [dispatch, setLoading, navigation, userActions.login]
   );
 
-  return {
-    user,
-    setUser,
-    login,
-    loading,
-  };
+  return useMemo(
+    () => ({
+      user,
+      setUser,
+      login,
+      loading,
+    }),
+    [user, login, loading, setUser]
+  );
 };
